@@ -1,1 +1,152 @@
+"""
+projekt_1.py: první projekt do Engeto Online Python Akademie
+author: Michal Pokorný
+email: my.pokorny@gmail.com
+discord: mipok
+"""
 
+TEXTS = ['''
+Situated about 10 miles west of Kemmerer,
+Fossil Butte is a ruggedly impressive
+topographic feature that rises sharply
+some 1000 feet above Twin Creek Valley
+to an elevation of more than 7500 feet
+above sea level. The butte is located just
+north of US 30N and the Union Pacific Railroad,
+which traverse the valley. ''',
+'''At the base of Fossil Butte are the bright
+red, purple, yellow and gray beds of the Wasatch
+Formation. Eroded portions of these horizontal
+beds slope gradually upward from the valley floor
+and steepen abruptly. Overlying them and extending
+to the top of the butte are the much steeper
+buff-to-white beds of the Green River Formation,
+which are about 300 feet thick.''',
+'''The monument contains 8198 acres and protects
+a portion of the largest deposit of freshwater fish
+fossils in the world. The richest fossil fish deposits
+are found in multiple limestone layers, which lie some
+100 feet below the top of the butte. The fossils
+represent several varieties of perch, as well as
+other freshwater genera and herring similar to those
+in modern oceans. Other fish such as paddlefish,
+garpike and stingray are also present.'''
+]
+
+jmeno = ('bob', 'ann', 'mike', 'liz')
+heslo = ('123', 'pass123', 'password123', 'pass123')
+
+# prihlasavani, prislusnost jmena s heslem pomoci indexu v tuplu
+
+print('username:')
+J = input()
+if J in jmeno:
+    indexJ = jmeno.index(J)
+else:
+    print()
+
+print('password:')
+H = input()
+if H in heslo:
+    indexH = heslo.index(H)
+else:
+    print()
+
+
+if J in jmeno and H in heslo and indexJ == indexH:
+    print('username:',J,'\n''password:',H)
+    print('-'*40,'\n''Welcome to the app, ',J,'\n'
+                'We have 3 texts to be analyzed.')
+    print('-'*40,'\n''Enter a number btw. 1 and 3 to select','\n','-'*40)
+
+#vzber textu
+
+    F = input()
+    Z = ('1','2','3')
+
+    if F in Z:
+        print('select number:', F)
+        F = int(F)
+        FF = F - 1
+
+        x = TEXTS[FF].split()
+
+        # pocet slov
+        print('\n''There are', len(x), 'words in the selected text.')
+
+        # velke pocatecnio pismeno
+        totalNumber = []
+        for word in x:
+            if word.istitle() == True:
+                totalNumber.append(1)
+        totalNumber = sum(totalNumber)
+        print('There are', totalNumber, 'titlecase words.')
+
+        # velka mpismena
+        totalNumber = []
+        for word in x:
+            if word.isupper() == True:
+                totalNumber.append(1)
+        totalNumber = sum(totalNumber)
+        print('There are', totalNumber, 'uppercase words.')
+
+        # mala pismena
+        totalNumber = []
+        for word in x:
+            if word.islower() == True:
+                totalNumber.append(1)
+        totalNumber = sum(totalNumber)
+        print('There are', totalNumber, 'lowercase words.')
+
+        # pocet cisle
+        totalNumber = []
+        for number in x:
+            if number.isnumeric() == True:
+                totalNumber.append(1)
+        totalNumber = sum(totalNumber)
+        print('The sum of all the numbers ', totalNumber, 'numeric strings.')
+
+        # suma cisel
+        totalNumber = []
+        for number in x:
+            if number.isnumeric() == True:
+                totalNumber.append(int(number))
+        totalNumber = sum(totalNumber)
+        print('The sum of all the numbers', totalNumber, '\n')
+
+        # graf:
+        ll = TEXTS[FF].split()
+
+        # delka jednotlivych slov
+        words = ll
+        oo = []
+        for word in words:
+            oo.append(len(word))
+
+        # soucet delek slov
+        v = []
+        for c in range(20):
+            if c in oo:
+                y = oo.count(c)
+                v.append(y)
+            else:
+                y = 0
+                v.append(y)
+        # GARF
+        t = -1
+        print('-' * 40, '\n''LEN|  OCCURENCES   |NR.', '\n', '-' * 40)
+        for u in v:
+            if u != 0 and t < 10:
+                t = t + 1
+                print('', t, '|', 'X' * u, ' ' * (15 - u), '|', u)
+            if u != 0 and t >= 10:
+                t = t + 1
+                print(t, '|', 'X' * u, ' ' * (15 - u), '|', u)
+            else:
+                t = t + 1
+    else:
+        print('Fail of system (╥﹏╥)')
+
+
+else:
+    print('unregistered user, terminating the program..')
