@@ -36,117 +36,177 @@ garpike and stingray are also present.'''
 jmeno = ('bob', 'ann', 'mike', 'liz')
 heslo = ('123', 'pass123', 'password123', 'pass123')
 
+
+
 # prihlasavani, prislusnost jmena s heslem pomoci indexu v tuplu
 
 print('username:')
-J = input()
-if J in jmeno:
-    indexJ = jmeno.index(J)
+username = input()
+if username in jmeno:
+    index_username = jmeno.index(username)
 else:
-    print()
+    print('unregistered user, terminating the program..')
+    exit()
 
 print('password:')
-H = input()
-if H in heslo:
-    indexH = heslo.index(H)
+password = input()
+if password in heslo:
+    index_password = heslo.index(password)
 else:
-    print()
+    print('unregistered user, terminating the program..')
+    exit()
 
 
-if J in jmeno and H in heslo and indexJ == indexH:
-    print('username:',J,'\n''password:',H)
-    print('-'*40,'\n''Welcome to the app, ',J,'\n'
-                'We have 3 texts to be analyzed.')
-    print('-'*40,'\n''Enter a number btw. 1 and 3 to select','\n','-'*40)
+if index_username != index_password:
+    print('unregistered user, terminating the program..')
+    exit()
+else:
+
+    print('username:', username, '\n''password:', password)
+    print('-' * 40, '\n''Welcome to the app, ', username, '\n'
+                                                          'We have 3 texts to be analyzed.')
+    print('-' * 40, '\n''Enter a number btw. 1 and 3 to select', '\n', '-' * 40)
+
+
+
 
 #vzber textu
 
-    F = input()
-    Z = ('1','2','3')
+selected_number = input()
 
-    if F in Z:
-        print('select number:', F)
-        F = int(F)
-        FF = F - 1
+number = tuple(range(1,len(TEXTS)+1))
+number = str(number)
 
-        x = TEXTS[FF].split()
+
+
+if selected_number in number:
+    print('select number:', selected_number)
+    selected_number = int(selected_number)
+    selected_number = selected_number - 1
+else:
+    print('Fail of system (╥﹏╥)')
+    exit()
+
+
+
+# statistika
+
+text = TEXTS[selected_number].split()
 
         # pocet slov
-        print('\n''There are', len(x), 'words in the selected text.')
+print('\n''There are', len(text), 'words in the selected text.')
 
-        # velke pocatecnio pismeno
-        totalNumber = []
-        for word in x:
-            if word.istitle() == True:
-                totalNumber.append(1)
-        totalNumber = sum(totalNumber)
-        print('There are', totalNumber, 'titlecase words.')
+        
+
+
+totalNumberTitle = []
+totalNumberIsupper = []
+totalNumberislower = []
+totalNumberIsnumeric  = []
+totalNumberSuma = []
+
+
+for words in text:
+    word=words
+
+    # velka pocatecni pismeno
+    # pri pouziti poze funkce isttitle to secte 12 slov tak jak je ve vzorovem vysledku
+    # podle komentare z 1. odevzdani mam odstranit ze souctu 30N takze je jen 11 slov
+
+    if word.istitle() == True and word.isalnum() != True  :
+        totalNumberTitle.append(1)
+    if word.istitle() == True and word.isalpha() == True :
+        totalNumberTitle.append(1)
+
 
         # velka mpismena
-        totalNumber = []
-        for word in x:
-            if word.isupper() == True:
-                totalNumber.append(1)
-        totalNumber = sum(totalNumber)
-        print('There are', totalNumber, 'uppercase words.')
+
+    if word.isupper() == True and word.isalpha() == True :
+        totalNumberIsupper.append(1)
 
         # mala pismena
-        totalNumber = []
-        for word in x:
-            if word.islower() == True:
-                totalNumber.append(1)
-        totalNumber = sum(totalNumber)
-        print('There are', totalNumber, 'lowercase words.')
+    if word.islower() == True:
+        totalNumberislower.append(1)
 
         # pocet cisle
-        totalNumber = []
-        for number in x:
-            if number.isnumeric() == True:
-                totalNumber.append(1)
-        totalNumber = sum(totalNumber)
-        print('The sum of all the numbers ', totalNumber, 'numeric strings.')
+
+    if word.isnumeric() == True:
+        totalNumberIsnumeric.append(1)
 
         # suma cisel
-        totalNumber = []
-        for number in x:
-            if number.isnumeric() == True:
-                totalNumber.append(int(number))
-        totalNumber = sum(totalNumber)
-        print('The sum of all the numbers', totalNumber, '\n')
+    if word.isnumeric() == True:
+        totalNumberSuma.append(int(word))
+
+
+totalNumberTitle = sum(totalNumberTitle)
+print('There are', totalNumberTitle, 'titlecase words.')
+
+totalNumberIsupper = sum(totalNumberIsupper)
+print('There are', totalNumberIsupper, 'uppercase words.')
+
+totalNumberislower = sum(totalNumberislower)
+print('There are', totalNumberislower, 'lowercase words.')
+
+totalNumberIsnumeric = sum(totalNumberIsnumeric)
+print('There are', totalNumberIsnumeric, 'numeric strings.')
+
+
+totalNumberSuma = sum(totalNumberSuma)
+print('The sum of all the numbers', totalNumberSuma, '\n')
+
+
 
         # graf:
-        ll = TEXTS[FF].split()
+
+text = TEXTS[selected_number].split()
 
         # delka jednotlivych slov
-        words = ll
-        oo = []
-        for word in words:
-            oo.append(len(word))
+
+words_list = []
+
+for word in text:
+    if word.isalnum() != True:
+        word = len(word)
+        word = word -1
+        words_list.append(word)
+    else:
+        words_list.append(len(word))
 
         # soucet delek slov
-        v = []
-        for c in range(20):
-            if c in oo:
-                y = oo.count(c)
-                v.append(y)
-            else:
-                y = 0
-                v.append(y)
-        # GARF
-        t = -1
-        print('-' * 40, '\n''LEN|  OCCURENCES   |NR.', '\n', '-' * 40)
-        for u in v:
-            if u != 0 and t < 10:
-                t = t + 1
-                print('', t, '|', 'X' * u, ' ' * (15 - u), '|', u)
-            if u != 0 and t >= 10:
-                t = t + 1
-                print(t, '|', 'X' * u, ' ' * (15 - u), '|', u)
-            else:
-                t = t + 1
+number_list = []
+for number_range in range(20):
+    if number_range in words_list:
+                number_real = words_list.count(number_range)
+                number_list.append(number_real)
     else:
-        print('Fail of system (╥﹏╥)')
+                number_real = 0
+                number_list.append(number_real)
+        # GARF
+graf_position = -1
+print('-' * 40, '\n''LEN|  OCCURENCES   |NR.', '\n', '-' * 40)
+
+for graf_lenght in number_list:
 
 
-else:
-    print('unregistered user, terminating the program..')
+    if graf_lenght != 0 and graf_position < 10:
+        graf_position = graf_position + 1
+        print('', graf_position, '|', 'X' * graf_lenght, ' ' * (15 - graf_lenght), '|', graf_lenght)
+
+    if graf_lenght != 0 and graf_position >= 10:
+        graf_position = graf_position + 1
+        print(graf_position, '|', 'X' * graf_lenght, ' ' * (15 - graf_lenght), '|', graf_lenght)
+
+    else:
+        graf_position = graf_position + 1
+
+
+
+
+
+
+
+
+
+
+
+
